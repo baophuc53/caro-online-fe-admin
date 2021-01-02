@@ -11,6 +11,8 @@ import {
 } from "react-router-dom";
 import AdminRoute from "./components/Router/AdminRoute";
 import ManageUser from "./pages/ManageUser/ManageUser";
+import home from "./layouts/MainLayout";
+import MainLayout from "./layouts/MainLayout";
 
 
 const Signout = (props) => (
@@ -33,7 +35,8 @@ const App = () => {
           {/* <AdminRoute path="/home" component={Signout} /> */}
           {/* <Redirect from="/" to="/admin-login" /> */}
           <Route path="/">
-            <ManageUser/>
+            <MainLayout/>
+            {/* <ManageUser/> */}
           </Route>
         </Switch>
       </div>
