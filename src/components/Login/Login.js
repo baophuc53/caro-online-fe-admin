@@ -5,7 +5,6 @@ import config from "../../config/config.json";
 import "./AdminLogin.scss";
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 
-
 const NormalLoginForm = () => {
   const token = localStorage.getItem("admin-token");
   const onFinish = (values) => {
@@ -69,6 +68,7 @@ const NormalLoginForm = () => {
             <a className="login-form-forgot" href="">
               Forgot password
             </a>
+          </Form.Item>
             <Link to="/register" className="login-form-register" href="">
               Register now!
             </Link>
