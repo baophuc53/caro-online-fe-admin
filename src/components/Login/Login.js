@@ -64,11 +64,15 @@ const NormalLoginForm = () => {
               placeholder="Password"
             />
           </Form.Item>
-          <Form.Item>
+          {/* <Form.Item>
             <a className="login-form-forgot" href="">
               Forgot password
             </a>
           </Form.Item>
+            <Link to="/register" className="login-form-register" href="">
+              Register now!
+            </Link>
+          </Form.Item> */}
 
           <Form.Item>
             <Button

@@ -11,6 +11,10 @@ import {
 } from "react-router-dom";
 import AdminRoute from "./components/Router/AdminRoute";
 import {Socket} from "./components/Socket/Socket";
+import ManageUser from "./pages/ManageUser/ManageUser";
+import home from "./layouts/MainLayout";
+import MainLayout from "./layouts/MainLayout";
+
 
 const Signout = (props) => (
   <Button
@@ -37,8 +41,12 @@ const App = () => {
       <div className="App">
         <Switch>
           <Route path="/admin-login" component={AdminLoginScreen} />
-          <AdminRoute path="/home" component={Signout} />
-          <Redirect from="/" to="/home" />
+          {/* <AdminRoute path="/home" component={Signout} /> */}
+          {/* <Redirect from="/" to="/admin-login" /> */}
+          <Route path="/">
+            <MainLayout/>
+            {/* <ManageUser/> */}
+          </Route>
         </Switch>
       </div>
     </Router>

@@ -33,6 +33,7 @@ function LoginScreen(props) {
           </div>
         </Col>
         <Col span={9} className="form-login">
+          <h1>ADMIN</h1>
           <AdminLoginForm />
         </Col>
       </Row>
