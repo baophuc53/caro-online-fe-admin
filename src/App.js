@@ -10,6 +10,8 @@ import {
   Redirect,
 } from "react-router-dom";
 import AdminRoute from "./components/Router/AdminRoute";
+import ManageUser from "./pages/ManageUser/ManageUser";
+
 
 const Signout = (props) => (
   <Button
@@ -28,13 +30,15 @@ const App = () => {
       <div className="App">
         <Switch>
           <Route path="/admin-login" component={AdminLoginScreen} />
-          <AdminRoute path="/home" component={Signout} />
-          <Redirect from="/" to="/home" />
+          {/* <AdminRoute path="/home" component={Signout} /> */}
+          {/* <Redirect from="/" to="/admin-login" /> */}
+          <Route path="/">
+            <ManageUser/>
+          </Route>
         </Switch>
-
       </div>
     </Router>
   );
-}
+};
 
 export default App;

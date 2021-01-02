@@ -1,5 +1,5 @@
 {
     "dev":{
-        "path":"https://play-caroo-be.herokuapp.com"
+        "path":"http://localhost:8000"
     }
 }
