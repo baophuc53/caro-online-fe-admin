@@ -40,15 +40,15 @@ function ManageUser(props) {
     {
       title: "History Match",
       render: () => (
-          <a style={{color: '#a0d911', fontWeight:'600'}}>View History Matches</a>
+        <a style={{ color: "#a0d911", fontWeight: "600" }}>
+          View History Matches
+        </a>
       ),
     },
     {
       title: "Action",
       key: "action",
-      render: (text, record) => (
-          <a>Block</a>
-      ),
+      render: (text, record) => <a>Block</a>,
     },
   ];
 
@@ -86,21 +86,28 @@ function ManageUser(props) {
 
   return (
     <div>
-      <Search
-        placeholder="input search text"
-        onSearch={onSearch}
-        style={{ width: 200 }}
+      <div style={{display: 'flex'}}>
+        <Search
+          placeholder="input search text"
+          onSearch={onSearch}
+          style={{ width: 300 }}
+        />
+        <br />
+        <Radio.Group
+          // style={{ marginTop: "20px" }}
+          options={options}
+          onChange={onChange}
+          value={filter}
+          optionType="button"
+          buttonStyle="solid"
+        />
+      </div>
+      <Table
+        columns={columns}
+        dataSource={data}
+        bordered
+        style={{ marginTop: "20px" }}
       />
-      <br/>
-      <Radio.Group
-       style={{marginTop: '20px'}}
-        options={options}
-        onChange={onChange}
-        value={filter}
-        optionType="button"
-        buttonStyle="solid"
-      />
-      <Table columns={columns} dataSource={data} bordered   style={{marginTop: '20px'}}/>
     </div>
   );
 }
