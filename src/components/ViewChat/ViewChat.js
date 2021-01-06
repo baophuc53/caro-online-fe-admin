@@ -10,26 +10,102 @@ function ViewChat(props) {
   const messagesEndRef = useRef(null);
   window.mess = messagesEndRef;
   const scrollToBottom = () => {
-    messagesEndRef.current &&
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current && messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
   };
-  window.props = props;
+  useEffect(scrollToBottom, [props.id]);
   const [data, setData] = useState([]);
 
-  const showDrawer =async () => {
+  const showDrawer = async () => {
     setVisible(true);
-    const response = await Axios.get(`${config.dev.path}/room/${props.id}/chat`, {
+    const response = await Axios.get(
+      `${config.dev.path}/room/${props.id}/chat`,
+      {
         headers: {
           Authorization: `token ${token}`,
-        }, 
-    });
-    if (response.data.status === "SUCCESS"){ setData(response.data.data); console.log("data ", data);}
+        },
+      }
+    );
+    if (response.data.status === "SUCCESS") {
+      setData(response.data.data);
+      console.log("data ", data);
+    }
   };
 
   const onClose = () => {
     setVisible(false);
   };
-
+  const data2 = [
+    {
+      username: "aaa",
+      time_stamp: "2021-01-06 16:06:35",
+      chat_content: "hiiii",
+    },
+    {
+      username: "aaa",
+      time_stamp: "2021-01-06 16:06:35",
+      chat_content: "hiiii",
+    },
+    {
+      username: "aaa",
+      time_stamp: "2021-01-06 16:06:35",
+      chat_content: "hiiii",
+    },
+    {
+      username: "aaa",
+      time_stamp: "2021-01-06 16:06:35",
+      chat_content: "hiiii",
+    },
+    {
+      username: "aaa",
+      time_stamp: "2021-01-06 16:06:35",
+      chat_content: "hiiii",
+    },
+    {
+      username: "aaa",
+      time_stamp: "2021-01-06 16:06:35",
+      chat_content: "hiiii",
+    },
+    {
+      username: "aaa",
+      time_stamp: "2021-01-06 16:06:35",
+      chat_content: "hiiii",
+    },
+    {
+      username: "aaa",
+      time_stamp: "2021-01-06 16:06:35",
+      chat_content: "hiiii",
+    },
+    {
+      username: "aaa",
+      time_stamp: "2021-01-06 16:06:35",
+      chat_content: "hiiii",
+    },
+    {
+      username: "aaa",
+      time_stamp: "2021-01-06 16:06:35",
+      chat_content: "hiiii",
+    },
+    {
+      username: "aaa",
+      time_stamp: "2021-01-06 16:06:35",
+      chat_content: "hiiii",
+    },
+    {
+      username: "aaa",
+      time_stamp: "2021-01-06 16:06:35",
+      chat_content: "hiiii",
+    },
+    {
+      username: "aaa",
+      time_stamp: "2021-01-06 16:06:35",
+      chat_content: "hiiii",
+    },
+    {
+      username: "aaa",
+      time_stamp: "2021-01-06 16:06:35",
+      chat_content: "hiiii",
+    },
+  ];
   return (
     <>
       <a type="primary" onClick={showDrawer}>
@@ -48,7 +124,6 @@ function ViewChat(props) {
             itemLayout="horizontal"
             dataSource={data}
             renderItem={(item) => (
-             
               <List.Item>
                 <List.Item.Meta
                   title={
@@ -62,7 +137,12 @@ function ViewChat(props) {
                       <div style={{ color: "#1890ff" }}>
                         {item?.username.toUpperCase()}
                       </div>
-                      <div>   {moment(item?.time_stamp).format('MMMM Do YYYY, h:mm:ss a')}</div>
+                      <div>
+                        {" "}
+                        {moment(item?.time_stamp).format(
+                          "MMMM Do YYYY, h:mm:ss a"
+                        )}
+                      </div>
                     </div>
                   }
                   description={item?.chat_content}
@@ -70,7 +150,7 @@ function ViewChat(props) {
               </List.Item>
             )}
           />
-          <a ref={messagesEndRef} />
+          <div ref={messagesEndRef} />
         </div>
       </Drawer>
     </>
