@@ -5,16 +5,16 @@ import config from "../../config/config.json";
 import "./AdminLogin.scss";
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 
-const NormalLoginForm = () => {
+const Login = () => {
   const token = localStorage.getItem("admin-token");
   const onFinish = (values) => {
     const { username, password } = values;
-    Axios.post(`${config.dev.path}/admin`, { username, password })
+    Axios.post(`${config.dev.path}/`, { username, password })
       .then((res) => {
         console.log(res);
         if (res.data.code === 0) {
           localStorage.setItem("admin-token", res.data.data.token);
-          window.location.href = "/home";
+          window.location.href = "/admin/user-management";
         } else alert("Login fail!");
       })
       .catch((err) => {
@@ -25,7 +25,7 @@ const NormalLoginForm = () => {
 
   return (
     <>
-      {!token ? (
+      {/* {!token ? ( */}
         <Form
           name="normal_login"
           className="admin-login-form"
@@ -84,10 +84,10 @@ const NormalLoginForm = () => {
             </Button>
           </Form.Item>
         </Form>
-      ) : (
-        <Redirect to="/admin" />
-      )}
+      {/* ) : (
+        <Redirect to="/manage-user" />
+      )} */}
     </>
   );
 };
-export default NormalLoginForm;
+export default Login;

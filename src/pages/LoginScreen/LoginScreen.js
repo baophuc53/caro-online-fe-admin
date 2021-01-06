@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col } from "antd";
-import AdminLoginForm from "../../components/Login/Login";
 import "./style.scss";
+import Login from "../../components/Login/Login";
 LoginScreen.propTypes = {};
 
 function LoginScreen(props) {
@@ -34,7 +34,7 @@ function LoginScreen(props) {
         </Col>
         <Col span={9} className="form-login">
           <h1>ADMIN</h1>
-          <AdminLoginForm />
+          <Login/>
         </Col>
       </Row>
 

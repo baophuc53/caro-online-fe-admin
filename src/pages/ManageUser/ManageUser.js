@@ -1,17 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Table, Tag, Space, Input, Radio } from "antd";
+import { Table, Tag, Space, Input, Radio, message } from "antd";
+import Axios from "axios";
 import "./ManageUser.scss";
+import ModalInfoUser from "../../components/InformationUser/ModalInfoUser";
+import config from "../../config/config.json";
+import { Link } from "react-router-dom";
 const { Search } = Input;
 
 function ManageUser(props) {
   const [filter, setFilter] = useState("active");
+  const token = localStorage.getItem("token");
+  const [data, setData] = useState([]);
+  useEffect(async () => {
+    const response = await Axios.get(`${config.dev.path}/user`, {
+      headers: {
+        Authorization: `token ${token}`,
+      },
+    });
+    if (response.data.status === "SUCCESS") setData(response.data.data);
+  }, []);
+
+  const blockUser = async (record) => {
+    const response = await Axios.put(
+      `${config.dev.path}/block/user/${record.id}`,
+      {
+        headers: {
+          Authorization: `token ${token}`,
+        },
+      }
+    );
+    console.log("res ", response);
+    if (response.data.status === "SUCCESS") {
+      message.success(response.data.data.message);
+      const getUser = await Axios.get(`${config.dev.path}/user`, {
+        headers: {
+          Authorization: `token ${token}`,
+        },
+      });
+      if (getUser.data.status === "SUCCESS") setData(getUser.data.data);
+    } else message.error(response.data.data.message);
+  };
+
   const columns = [
     {
       title: "Username",
       dataIndex: "username",
       key: "username",
-      render: (text) => <a>{text}</a>,
+      render: (text, record) => (
+        <ModalInfoUser userName={text} infor={record} />
+      ),
     },
     {
       title: "Nickname",
@@ -27,8 +65,19 @@ function ManageUser(props) {
       title: "Status",
       key: "status",
       dataIndex: "status",
+      filters: [
+        {
+          text: "ACTIVATED",
+          value: "activated",
+        },
+        {
+          text: "INACTIVATED",
+          value: "inactivated",
+        },
+      ],
+      onFilter: (value, record) => record.status.indexOf(value) === 0,
       render: (status) => {
-        let colorText = status === "active" ? "green" : "red";
+        let colorText = status.toUpperCase() === "ACTIVATED" ? "green" : "red";
 
         return (
           <Tag color={colorText} key={status}>
@@ -39,38 +88,44 @@ function ManageUser(props) {
     },
     {
       title: "History Match",
-      render: () => (
-        <a style={{ color: "#a0d911", fontWeight: "600" }}>
+      render: (_, record) => (
+        <Link
+          to={`/admin/history/user/${record.id}`}
+          style={{ color: "#a0d911", fontWeight: "600" }}
+        >
           View History Matches
-        </a>
+        </Link>
       ),
     },
     {
       title: "Action",
       key: "action",
-      render: (text, record) => <a>Block</a>,
+      render: (text, record) => {
+        return record.status === "activated" ? (
+          <a onClick={() => blockUser(record)}>Block</a>
+        ) : (
+          ""
+        );
+      },
     },
   ];
+  window.data = data;
 
-  const data = [
-    {
-      key: "1",
-      username: "quanky",
-      nickname: "Killer Warning",
-      email: "quanky99@gmail.com",
-      status: "active",
-    },
-    {
-      key: "2",
-      username: "quanky99",
-      nickname: "Best Quan Ky",
-      email: "quanky99@gmail.com",
-      status: "unactive",
-    },
-  ];
-
-  const onSearch = (value) => {
-    console.log(value);
+  const onSearch = async (value) => {
+    await console.log(value);
+    const response = await Axios.post(
+      `${config.dev.path}/search`,
+      {
+        search: value,
+      },
+      {
+        headers: {
+          Authorization: `token ${token}`,
+        },
+      }
+    );
+    console.log("res ", response);
+    if (response.data.status === "SUCCESS") setData(response.data.data);
   };
 
   const options = [
@@ -83,24 +138,34 @@ function ManageUser(props) {
     console.log("radio checked", e.target.value);
     setFilter(e.target.value);
   };
+  const onChangeSearch = async (e) => {
+    if (!e.target.value) {
+      const response = await Axios.get(`${config.dev.path}/user`, {
+        headers: {
+          Authorization: `token ${token}`,
+        },
+      });
+      if (response.data.status === "SUCCESS") setData(response.data.data);
+    }
+  };
 
   return (
     <div>
-      <div style={{display: 'flex'}}>
+      <div style={{ display: "flex" }}>
         <Search
-          placeholder="input search text"
+          placeholder="Tìm kiếm người dùng theo username, email"
+          onChange={onChangeSearch}
           onSearch={onSearch}
-          style={{ width: 300 }}
+          style={{ width: 400 }}
         />
         <br />
-        <Radio.Group
-          // style={{ marginTop: "20px" }}
+        {/* <Radio.Group
           options={options}
           onChange={onChange}
           value={filter}
           optionType="button"
           buttonStyle="solid"
-        />
+        /> */}
       </div>
       <Table
         columns={columns}

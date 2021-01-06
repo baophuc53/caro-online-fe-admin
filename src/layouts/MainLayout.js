@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Layout, Menu, Breadcrumb } from "antd";
+import { useHistory } from "react-router-dom";
 import {
   DesktopOutlined,
   PieChartOutlined,
@@ -9,7 +10,15 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import ManageUser from "../pages/ManageUser/ManageUser";
-
+import "./MainLayout.scss";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+  Link
+} from "react-router-dom";
+import MatchManagement from "../pages/MatchManagement/MatchManagement";
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -21,32 +30,91 @@ function MainLayout(props) {
     console.log(collapsed);
     setCollapsed(collapsed);
   };
+  const [menuActive, setMenuActive] = React.useState(1);
+  const menu = [
+    {
+      key: 1,
+      text: "Player Management",
+      path: "/admin/user-management",
+      icon: <TeamOutlined />,
+    },
+    {
+      key: 2,
+      text: "Match Management",
+      path: "/admin/match-management",
+      icon: <DesktopOutlined />,
+    },
+  ];
+
+  const handleClick = (e) => {
+    console.log("click ", e);
+    setMenuActive(e.key);
+    // switch (e.key) {
+    //   case '1':
+    //     history.push("/admin/user-management");
+    //     // <Link to="/manage-user" />;
+    //     break;
+    //   case '2':
+    //     history.push('admin/match-management');
+    //     // <Link to="/match-management" />;
+    //     break;
+    //   default:
+    //     break;
+    // }
+  };
+  console.log(props.menu);
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
-        <div className="logo" >CARO ONLINE</div>
-        <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
-          <Menu.Item key="1" icon={<TeamOutlined />}>
-            Player Management
-          </Menu.Item>
-          <Menu.Item key="2" icon={<DesktopOutlined />}>
-            Match Management 
-          </Menu.Item>
-         
+        <div className="logo">CARO ONLINE</div>
+        <Menu
+          theme="dark"
+          defaultSelectedKeys={[`${menuActive}`]}
+          mode="inline"
+          onClick={handleClick}
+        >
+          {menu.map((menu) => (
+          <Menu.Item key={menu.key} icon={menu.icon}>
+            <Link to= {menu.path}>{menu.text}</Link>
+              
+            </Menu.Item>
+          ))}
+        
         </Menu>
       </Sider>
       <Layout className="site-layout">
-        <Header className="site-layout-background" style={{ padding: 0, backgroundColor: '#89bbff' }} ><h2 style={{paddingLeft: '40px'}}>Player Management</h2></Header>
-        <Content style={{ margin: "0 16px", backgroundColor: 'white', marginTop: '20px' }}>
-          {/* <Breadcrumb style={{ margin: "16px 0" }}>
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb> */}
+        <Header
+          className="site-layout-background"
+          style={{ padding: 0, backgroundColor: "#1890ff" }}
+        >
+          <h2
+            className="header-content"
+            style={{
+              paddingLeft: "16px",
+              color: "white",
+            }}
+          >
+            {menu[menuActive-1].text}
+          </h2>
+        </Header>
+        <Content
+          style={{
+            margin: "0 16px",
+            backgroundColor: "white",
+            marginTop: "20px",
+          }}
+        >
           <div
             className="site-layout-background"
             style={{ padding: 24, minHeight: 360 }}
           >
-            <ManageUser/>
+            {props.children}
+            {/* <Route exact path="/manage-user">
+              <ManageUser />
+            </Route>
+            <Route exact path="/match-management">
+              <MatchManagement />
+            </Route> */}
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>

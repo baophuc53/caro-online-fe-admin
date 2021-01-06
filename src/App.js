@@ -1,7 +1,6 @@
 import "./App.scss";
 import React, { useEffect } from "react";
 import "antd/dist/antd.css";
-import AdminLoginScreen from "./pages/LoginScreen/LoginScreen";
 import { Button } from "antd";
 import {
   BrowserRouter as Router,
@@ -10,11 +9,12 @@ import {
   Redirect,
 } from "react-router-dom";
 import AdminRoute from "./components/Router/AdminRoute";
-import {Socket} from "./components/Socket/Socket";
-import ManageUser from "./pages/ManageUser/ManageUser";
-import home from "./layouts/MainLayout";
+import { Socket } from "./components/Socket/Socket";
 import MainLayout from "./layouts/MainLayout";
-
+import ManageUser from "./pages/ManageUser/ManageUser";
+import LoginScreen from "./pages/LoginScreen/LoginScreen";
+import MatchManagement from "./pages/MatchManagement/MatchManagement";
+import HistoryMatch from "./pages/HistoryMatch/HistoryMatch";
 
 const Signout = (props) => (
   <Button
@@ -40,13 +40,42 @@ const App = () => {
     <Router>
       <div className="App">
         <Switch>
-          <Route path="/admin-login" component={AdminLoginScreen} />
+          <Route path="/login" component={LoginScreen} />
+          <Route path="/admin">
+            <MainLayout component={MainLayout}>
+              <Switch>
+                <Route path="/admin/user-management" component={ManageUser} />
+                <Route
+                  path="/admin/match-management"
+                  component={MatchManagement}
+                />
+                <Route
+                  path="/admin/history/user/:id"
+                  component={HistoryMatch}
+                />
+              </Switch>
+            </MainLayout>
+          </Route>
+          {/* <Route path="/match-management">
+            <MainLayout menu="2">
+              <MatchManagement />
+            </MainLayout>
+          </Route>
+          <Route path="/match-management-chat">
+            <MainLayout menu="2">
+              <ViewChat />
+            </MainLayout>
+          </Route> */}
+          <Route exact path="/">
+            {!localStorage.getItem("admin-token") ? (
+              <Redirect to="/login" />
+            ) : (
+              <Redirect to="/admin/user-management" />
+            )}
+          </Route>
           {/* <AdminRoute path="/home" component={Signout} /> */}
           {/* <Redirect from="/" to="/admin-login" /> */}
-          <Route path="/">
-            <MainLayout/>
-            {/* <ManageUser/> */}
-          </Route>
+          {/* <Route path="/manage-user" component={ManageUser} /> */}
         </Switch>
       </div>
     </Router>
