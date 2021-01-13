@@ -14,6 +14,9 @@ function HistoryMatch(props) {
   const userId = props.match.params.id;
   console.log("iddd ",userId);
   let history = useHistory();
+  
+
+  // useEffect(scrollToBottom, [messages]);
   useEffect(async () => {
     const response = await Axios.get(`${config.dev.path}/room/user/${userId}`, {
       headers: {
@@ -22,6 +25,7 @@ function HistoryMatch(props) {
     });
     console.log("res ", response);
     if (response.data.status === "SUCCESS") setData(response.data.data);
+    // scrollToBottom();
   }, []);
   const columns = [
     {

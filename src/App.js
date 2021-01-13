@@ -56,16 +56,7 @@ const App = () => {
               </Switch>
             </MainLayout>
           </Route>
-          {/* <Route path="/match-management">
-            <MainLayout menu="2">
-              <MatchManagement />
-            </MainLayout>
-          </Route>
-          <Route path="/match-management-chat">
-            <MainLayout menu="2">
-              <ViewChat />
-            </MainLayout>
-          </Route> */}
+         
           <Route exact path="/">
             {!localStorage.getItem("admin-token") ? (
               <Redirect to="/login" />
