@@ -4,21 +4,21 @@ import Axios from "axios";
 import config from "../../config/config.json";
 const moment = require("moment");
 
-function ViewChat(props) {
+function ViewChat({id}) {
   const [visible, setVisible] = useState(false);
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("admin-token");
   const messagesEndRef = useRef(null);
   window.mess = messagesEndRef;
   const scrollToBottom = () => {
     messagesEndRef.current && messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
   };
-  useEffect(scrollToBottom, [props.id]);
+  useEffect(scrollToBottom, [id]);
   const [data, setData] = useState([]);
 
   const showDrawer = async () => {
     setVisible(true);
     const response = await Axios.get(
-      `${config.dev.path}/room/${props.id}/chat`,
+      `${config.dev.path}/room/${id}/chat`,
       {
         headers: {
           Authorization: `token ${token}`,

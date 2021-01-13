@@ -9,7 +9,7 @@ const { Search } = Input;
 
 function HistoryMatch(props) {
   const [filter, setFilter] = useState("active");
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("admin-token");
   const [data, setData] = useState([]);
   const userId = props.match.params.id;
   console.log("iddd ",userId);
@@ -71,7 +71,7 @@ function HistoryMatch(props) {
     {
       title: "Action",
       key: "action",
-      render: () => <ViewChat />
+      render: (_, record) => <ViewChat id={record.id} />
     },
   ];
 

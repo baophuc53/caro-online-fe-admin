@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Modal,  Tag } from "antd";
+import { Modal, Tag } from "antd";
 import { Descriptions, Badge } from "antd";
-import moment from 'moment'
-import 'moment-timezone';
+import moment from "moment";
+import "moment-timezone";
 
 const ModalInfoUser = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -18,6 +18,7 @@ const ModalInfoUser = (props) => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+
   const { infor } = props;
   console.log("infor", infor);
   return (
@@ -49,10 +50,10 @@ const ModalInfoUser = (props) => {
             )}
           </Descriptions.Item>
           <Descriptions.Item label="Platform">
-            {infor?.platform ? <Tag color="blue">{infor?.platform}</Tag>: null}
+            {infor?.platform ? <Tag color="blue">{infor?.platform}</Tag> : null}
           </Descriptions.Item>
           <Descriptions.Item label="Started Time">
-          {moment(infor?.time_join).format('MMMM Do YYYY, h:mm:ss a')}
+            {moment(infor?.time_join).format("MMMM Do YYYY, h:mm:ss a")}
           </Descriptions.Item>
           <Descriptions.Item label="Played">{infor?.played}</Descriptions.Item>
           <Descriptions.Item label="Won">{infor?.won}</Descriptions.Item>
