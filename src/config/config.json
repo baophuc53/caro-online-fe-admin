@@ -1,5 +1,8 @@
 {
     "dev": {
-        "path": "http://localhost:8000/admin"
+        "path": "https://play-caroo-be.herokuapp.com/admin"
+    },
+    "socket": {
+        "path": "https://play-caroo-be.herokuapp.com/"
     }
 }

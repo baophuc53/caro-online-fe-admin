@@ -10,16 +10,17 @@ const { Search } = Input;
 
 function MatchManagement(props) {
   const [filter, setFilter] = useState("active");
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("admin-token");
   const [data, setData] = useState([]);
-  useEffect(async () => {
-    const response = await Axios.get(`${config.dev.path}/room`, {
+  useEffect(() => {
+    const response = Axios.get(`${config.dev.path}/room`, {
       headers: {
         Authorization: `token ${token}`,
       },
-    });
+    }).then((response) => {
     console.log("res ", response);
-    if (response.data.status === "SUCCESS") setData(response.data.data);
+    if (response.data.status == "SUCCESS") setData(response.data.data);
+    });
   }, []);
   const columns = [
     {
@@ -69,7 +70,7 @@ function MatchManagement(props) {
     {
       title: "Action",
       key: "action",
-      render: (_,record) => <ViewChat id={record.id}/>,
+      render: (_, record) => <ViewChat id={record.id} />,
     },
   ];
 
@@ -87,7 +88,7 @@ function MatchManagement(props) {
     console.log("radio checked", e.target.value);
     setFilter(e.target.value);
   };
-
+  console.log(data);
   return (
     <div>
       {/* <div style={{ display: "flex" }}> */}

@@ -10,7 +10,7 @@ const { Search } = Input;
 
 function ManageUser(props) {
   const [filter, setFilter] = useState("active");
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("admin-token");
   const [data, setData] = useState([]);
   useEffect(async () => {
     const response = await Axios.get(`${config.dev.path}/user`, {

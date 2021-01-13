@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Layout, Menu, Breadcrumb } from "antd";
+import { Layout, Menu, Breadcrumb, Button } from "antd";
 import { useHistory } from "react-router-dom";
 import {
   DesktopOutlined,
@@ -62,6 +62,10 @@ function MainLayout(props) {
     //     break;
     // }
   };
+  const Signout = () => {
+    localStorage.clear();
+    window.location.href = "/login";
+  };
   console.log(props.menu);
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -95,6 +99,9 @@ function MainLayout(props) {
             }}
           >
             {menu[menuActive-1].text}
+            <Button type="text" onClick={() => Signout()}>
+          Sign out
+        </Button>
           </h2>
         </Header>
         <Content
