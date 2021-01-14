@@ -99,7 +99,7 @@ function MainLayout(props) {
             }}
           >
             {menu[menuActive-1].text}
-            <Button type="text" onClick={() => Signout()}>
+            <Button type= "default" onClick={() => Signout()} style={{float: 'right', marginTop: '15px', marginRight: '20px'}} >
           Sign out
         </Button>
           </h2>

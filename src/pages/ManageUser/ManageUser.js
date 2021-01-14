@@ -74,6 +74,10 @@ function ManageUser(props) {
           text: "INACTIVATED",
           value: "inactivated",
         },
+        {
+          text: "BLOCK",
+          value: "block",
+        },
       ],
       onFilter: (value, record) => record.status.indexOf(value) === 0,
       render: (status) => {

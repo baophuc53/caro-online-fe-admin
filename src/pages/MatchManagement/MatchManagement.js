@@ -109,7 +109,7 @@ function MatchManagement(props) {
       {/* </div> */}
       <Table
         columns={columns}
-        dataSource={data}
+        dataSource={data.reverse()}
         bordered
         // style={{ marginTop: "20px" }}
       />
